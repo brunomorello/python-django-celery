@@ -1,6 +1,9 @@
 version: '3.8'
 
 services:
+  redis:
+    image: redis:7.2.5-alpine    
+
   django:
     container_name: django
     build: 
@@ -10,6 +13,17 @@ services:
       - ./dcelery:/usr/scr/app/
     ports:
       - 8001:8000
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=0930jd30j9jd09j09j109fj010j0f
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+
+  celery:
+    container_name: celery
+    build: 
+      context: ./dcelery
+    volumes:
+      - ./dcelery:/usr/scr/app
     environment:
       - DEBUG=1
       - SECRET_KEY=0930jd30j9jd09j09j109fj010j0f
