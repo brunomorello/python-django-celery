@@ -10,7 +10,13 @@ services:
       context: ./dcelery
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./dcelery:/usr/scr/app/
+      # windows config
+      - type: bind
+        source: ./dcelery
+        target: /usr/scr/app/
+      # unix config
+      # - ./dcelery:/usr/scr/app/
+    working_dir: /usr/scr/app/
     ports:
       - 8001:8000
     environment:
@@ -23,7 +29,13 @@ services:
     build: 
       context: ./dcelery
     volumes:
-      - ./dcelery:/usr/scr/app
+      # windows config
+      - type: bind
+        source: ./dcelery
+        target: /usr/scr/app/
+      # unix config
+      # - ./dcelery:/usr/scr/app/
+    working_dir: /usr/scr/app/
     environment:
       - DEBUG=1
       - SECRET_KEY=0930jd30j9jd09j09j109fj010j0f
