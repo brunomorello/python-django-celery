@@ -23,6 +23,8 @@ services:
       - DEBUG=1
       - SECRET_KEY=0930jd30j9jd09j09j109fj010j0f
       - ALLOWED_HOSTS=localhost,127.0.0.1
+    depends_on:
+      - redis
 
   celery:
     container_name: celery
@@ -41,3 +43,20 @@ services:
       - DEBUG=1
       - SECRET_KEY=0930jd30j9jd09j09j109fj010j0f
       - ALLOWED_HOSTS=localhost,127.0.0.1
+    depends_on:
+      - redis
+      - django
+
+  celery_worker:
+    build: 
+      context: ./celery_worker
+      dockerfile: Dockerfile
+    command: celery -A celery_worker worker -l INFO
+    volumes:
+      # windows config
+      - type: bind
+        source: ./celery_worker
+        target: /usr/scr/app/
+    depends_on:
+      - redis
+      - django
