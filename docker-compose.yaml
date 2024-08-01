@@ -30,7 +30,7 @@ services:
     container_name: celery
     build: 
       context: ./dcelery
-    command: celery --app=dcelery worker -l INFO
+    command: celery --app=dcelery worker -l INFO -Q queue1
     volumes:
       # windows config
       - type: bind
@@ -51,7 +51,7 @@ services:
     build: 
       context: ./celery_worker
       dockerfile: Dockerfile
-    command: celery -A celery_worker worker -l INFO
+    command: celery -A celery_worker worker -l INFO -Q queue2
     volumes:
       # windows config
       - type: bind
