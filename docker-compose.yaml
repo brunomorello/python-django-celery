@@ -4,6 +4,13 @@ services:
   redis:
     image: redis:7.2.5-alpine    
 
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+
   django:
     container_name: django
     build: 
@@ -31,7 +38,7 @@ services:
     build: 
       context: ./dcelery
     # added more queues
-    command: celery --app=dcelery worker -l INFO -Q celery,celery:1,celery:2,celery:3
+    command: celery --app=dcelery worker -l INFO -Q tasks
     volumes:
       # windows config
       - type: bind
@@ -47,6 +54,7 @@ services:
     depends_on:
       - redis
       - django
+      - rabbitmq
   # disabled for while
   # celery_worker:
   #   build: 

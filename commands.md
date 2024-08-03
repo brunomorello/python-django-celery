@@ -1,6 +1,12 @@
 docker-compose up -d --build  
 docker exec -it django /bin/sh
 
+# create app 
+python ./manage.py startapp newapp
+
+# remove all docker containers and images
+docker stop ${docker ps -aq} && docker rm ${docker ps -aq} && docker rmi ${docker images -aq}
+
 python manage.py shell
 from newapp.tasks import task1, tp2
 tp1.delay()
@@ -18,3 +24,21 @@ from celery import chain
 from newapp.tasks import tp1, tp2, tp3, tp4
 task_chain = chain(tp4.s(), tp1.s(), tp2.s(), tp3.s())
 task_chain.apply_async()
+
+# install pure-python impl for AMQP (pika)
+pip install pika
+
+# test task priorization with rabbitMQ
+
+from dcelery.celery import t1, t2, t3
+t2.apply_async(priority=5)
+t1.apply_async(priority=6)
+t3.apply_async(priority=9)
+t2.apply_async(priority=5)
+t1.apply_async(priority=6)
+t3.apply_async(priority=9)
+
+# inspect task on django
+
+celery inspect active
+celery inspect active_queues
