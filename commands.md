@@ -42,3 +42,8 @@ t3.apply_async(priority=9)
 
 celery inspect active
 celery inspect active_queues
+
+# test passing arguments and returning results from celery tasks
+from dcelery.celery import t1
+result = t1.apply_async(args=[5,10], kwargs={"message":"The sum is "})
+result.get()

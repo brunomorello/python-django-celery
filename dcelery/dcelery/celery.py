@@ -19,9 +19,11 @@ app.conf.worker_prefetch_multiplier = 1
 app.conf.worker_concurrency = 1
 
 @app.task(queue='tasks')
-def t1():
-    time.sleep(3)
-    return
+def t1(a, b, message=None):
+    result = a + b
+    if message:
+        result = f"{message}: {result}"
+    return result
 
 @app.task(queue='tasks')
 def t2():
@@ -32,6 +34,30 @@ def t2():
 def t3():
     time.sleep(3)
     return
+
+def test():
+    # call task async
+    result = t1.apply_async(args=[12,29], kwargs={"message":"The sum is "})
+    
+    if result.ready():
+        print("task is completed")
+    else:
+        print("task is still running")
+        
+    if result.successful():
+        print("task completed successfully")
+    else:
+        print("task encountered an error")
+        
+    try:
+        task_result = result.get()
+        print("task result: ", task_result)
+    except Exception as e:
+        print("exception thrown: ", str(e))
+        
+    exception = result.get(propagate=False)
+    if exception:
+        print("an exception occurred during task execution: ", str(exception))
 
 # Example of task rate limit - redis
 # app.conf.task_default_rate_limit = '1/m'
