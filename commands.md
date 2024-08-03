@@ -47,3 +47,14 @@ celery inspect active_queues
 from dcelery.celery import t1
 result = t1.apply_async(args=[5,10], kwargs={"message":"The sum is "})
 result.get()
+
+# testing Flower to monitor workers and tasks
+from dcelery.celery import t1, t2, t3, test
+t2.apply_async(priority=5)
+t1.apply_async(args=[5,10], kwargs={"message":"The sum is "})
+t3.apply_async(priority=9)
+t2.apply_async(priority=5)
+t1.apply_async(args=[5,10], kwargs={"message":"The sum is "})
+t3.apply_async(priority=9)
+t1.apply_async(args=[5,10], kwargs={"message":"The sum is "})
+test()
