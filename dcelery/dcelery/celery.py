@@ -20,6 +20,7 @@ app.conf.worker_concurrency = 1
 
 @app.task(queue='tasks')
 def t1(a, b, message=None):
+    time.sleep(5)
     result = a + b
     if message:
         result = f"{message}: {result}"
@@ -58,6 +59,17 @@ def test():
     exception = result.get(propagate=False)
     if exception:
         print("an exception occurred during task execution: ", str(exception))
+        
+def test_sync():
+    result = t1.apply_async(args=[12,29], kwargs={"message":"The sum is "})
+    task_result = result.get()
+    print("task is running synchronously")
+    print(task_result)
+    
+def test_async():
+    result = t1.apply_async(args=[12,29], kwargs={"message":"The sum is "})
+    print("task is running asynchronously")
+    print("TaskID: ", result.task_id)
 
 # Example of task rate limit - redis
 # app.conf.task_default_rate_limit = '1/m'
