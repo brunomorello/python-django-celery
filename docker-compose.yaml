@@ -30,7 +30,8 @@ services:
     container_name: celery
     build: 
       context: ./dcelery
-    command: celery --app=dcelery worker -l INFO -Q queue1
+    # added more queues
+    command: celery --app=dcelery worker -l INFO -Q celery,celery:1,celery:2,celery:3
     volumes:
       # windows config
       - type: bind
@@ -46,17 +47,17 @@ services:
     depends_on:
       - redis
       - django
-
-  celery_worker:
-    build: 
-      context: ./celery_worker
-      dockerfile: Dockerfile
-    command: celery -A celery_worker worker -l INFO -Q queue2
-    volumes:
-      # windows config
-      - type: bind
-        source: ./celery_worker
-        target: /usr/scr/app/
-    depends_on:
-      - redis
-      - django
+  # disabled for while
+  # celery_worker:
+  #   build: 
+  #     context: ./celery_worker
+  #     dockerfile: Dockerfile
+  #   command: celery -A celery_worker worker -l INFO -Q queue2
+  #   volumes:
+  #     # windows config
+  #     - type: bind
+  #       source: ./celery_worker
+  #       target: /usr/scr/app/
+  #   depends_on:
+  #     - redis
+  #     - django
