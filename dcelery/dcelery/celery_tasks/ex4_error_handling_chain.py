@@ -16,6 +16,6 @@ def divide(input):
     return input / 2
 
 def run_task_chain():
-    task_chain = chain(add.s(2,(3-3-2)), multiply.s())
+    task_chain = chain(add.s(2,(3-3-2)), multiply.s(), divide.s())
     result = task_chain.apply_async()
     result.get()

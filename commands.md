@@ -70,3 +70,15 @@ https://docs.celeryq.dev/en/stable/userguide/tasks.html#retrying
 
 from dcelery.celery_tasks.ex2_auto_retry import test_autoretry
 test_autoretry.delay()
+
+# testing error handling groups
+
+from dcelery.celery_tasks.ex3_error_handling_group import run_tasks
+run_tasks()
+
+# testing error handling chain
+
+from dcelery.celery_tasks.ex4_error_handling_chain import run_task_chain
+run_task_chain()
+
+in case any task fails during the chain execution, the next task is not being executed
