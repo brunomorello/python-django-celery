@@ -63,3 +63,10 @@ test()
 
 from dcelery.celery_tasks.ex1_exception_example import task_with_exception
 task_with_exception.delay()
+
+# testing automatic retry for known exceptions
+
+https://docs.celeryq.dev/en/stable/userguide/tasks.html#retrying
+
+from dcelery.celery_tasks.ex2_auto_retry import test_autoretry
+test_autoretry.delay()
