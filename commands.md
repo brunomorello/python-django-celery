@@ -58,3 +58,8 @@ t1.apply_async(args=[5,10], kwargs={"message":"The sum is "})
 t3.apply_async(priority=9)
 t1.apply_async(args=[5,10], kwargs={"message":"The sum is "})
 test()
+
+# testing Custom Class - OOP to handle failure 
+
+from dcelery.celery_tasks.ex1_exception_example import task_with_exception
+task_with_exception.delay()
