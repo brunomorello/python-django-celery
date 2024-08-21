@@ -104,3 +104,14 @@ link_error is not being executed by celery task
 
 from dcelery.celery_tasks.ex8_tasks_graceful_shutdown_cleanup import run_task
 run_task()
+
+# Using Sentry to tracking & monitoring Errors 
+
+https://sentry.io/
+
+from dcelery.celery_tasks.ex9_track_monitor_error_sentry import divide_numbers
+divide_numbers.delay(1,0)
+
+check the error on app dashboard
+
+https://person-study.sentry.io/projects/python-django/?project=4507817460039760
