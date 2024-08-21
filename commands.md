@@ -92,3 +92,10 @@ run_task_group()
 
 from dcelery.celery_tasks.ex6_tasks_timeout_revoking import execute_task_examples
 execute_task_examples()
+
+# testing callback after task failure
+
+from dcelery.celery_tasks.ex7_tasks_callback_after_error import run_task
+run_task()
+
+link_error is not being executed by celery task
