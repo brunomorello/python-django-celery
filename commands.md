@@ -99,3 +99,8 @@ from dcelery.celery_tasks.ex7_tasks_callback_after_error import run_task
 run_task()
 
 link_error is not being executed by celery task
+
+# testing signals graceful shutdown and cleanup of failed tasks
+
+from dcelery.celery_tasks.ex8_tasks_graceful_shutdown_cleanup import run_task
+run_task()
