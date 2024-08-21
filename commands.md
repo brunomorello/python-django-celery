@@ -87,3 +87,8 @@ in case any task fails during the chain execution, the next task is not being ex
 
 from dcelery.celery_tasks.ex5_dead_letter_queue import run_task_group
 run_task_group()
+
+# testing task timeouts and revoking
+
+from dcelery.celery_tasks.ex6_tasks_timeout_revoking import execute_task_examples
+execute_task_examples()
