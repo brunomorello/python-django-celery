@@ -82,3 +82,8 @@ from dcelery.celery_tasks.ex4_error_handling_chain import run_task_chain
 run_task_chain()
 
 in case any task fails during the chain execution, the next task is not being executed
+
+# testing dead leatter queue
+
+from dcelery.celery_tasks.ex5_dead_letter_queue import run_task_group
+run_task_group()
