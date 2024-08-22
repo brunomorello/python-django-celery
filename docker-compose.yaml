@@ -38,7 +38,7 @@ services:
     build: 
       context: ./dcelery
     # added more queues
-    command: celery --app=dcelery worker --hostname=celeryWorker1@%h -l INFO -Q tasks,dead_letter
+    command: celery --app=dcelery worker --hostname=celeryWorker1@%h -l INFO -Q tasks,dead_letter -E -B
     volumes:
       # windows config
       - type: bind
