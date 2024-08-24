@@ -56,19 +56,18 @@ services:
       - django
       - rabbitmq
   # disabled for while
-  # celery_worker:
-  #   build: 
-  #     context: ./celery_worker
-  #     dockerfile: Dockerfile
-  #   command: celery -A celery_worker worker -l INFO -Q queue2
-  #   volumes:
-  #     # windows config
-  #     - type: bind
-  #       source: ./celery_worker
-  #       target: /usr/scr/app/
-  #   depends_on:
-  #     - redis
-  #     - django
+  celery_worker:
+    build: 
+      context: ./celery_worker
+      dockerfile: Dockerfile
+    command: celery -A celery_worker worker -l INFO -B
+    volumes:
+      # windows config
+      - type: bind
+        source: ./celery_worker
+        target: /usr/scr/app/
+    env_file:
+      - ./celery_worker/env_vars.txt
 
   flower:
     image: mher/flower
